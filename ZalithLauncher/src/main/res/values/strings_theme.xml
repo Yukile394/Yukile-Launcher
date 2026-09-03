@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_category_theme">Görünüm</string>
+    <string name="theme_settings_title">Görünüm ve Renkler</string>
+    <string name="theme_settings_mode_main">Ana Arayüz</string>
+    <string name="theme_settings_mode_ingame">Oyun İçi</string>
+    <string name="theme_settings_reset">Varsayılana Sıfırla</string>
+    <string name="theme_settings_play_button_bg">OYNA Butonu Arka Planı</string>
+    <string name="theme_settings_pick_image">Görsel / GIF Seç</string>
+    <string name="theme_settings_fit_cover">Kapla</string>
+    <string name="theme_settings_fit_contain">Sığdır</string>
+    <string name="theme_settings_clear">Kaldır</string>
+    <string name="theme_settings_opacity">Opaklık</string>
+
+    <string name="theme_color_primary">Ana Renk</string>
+    <string name="theme_color_secondary">İkincil Renk</string>
+    <string name="theme_color_button">Buton Rengi</string>
+    <string name="theme_color_button_text">Buton Yazı Rengi</string>
+    <string name="theme_color_border">Kenarlık Rengi</string>
+    <string name="theme_color_background">Arka Plan Rengi</string>
+    <string name="theme_color_accent">Vurgu Rengi</string>
+    <string name="theme_color_hover">Dokunma/Hover Rengi</string>
+    <string name="theme_color_selected">Seçili Buton Rengi</string>
+</resources>
