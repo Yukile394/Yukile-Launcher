@@ -5,8 +5,19 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import org.json.JSONObject
 
+/** Bir butonun arka planı butonu tamamen mi kaplasın yoksa içine mi sığsın. */
 enum class BackgroundFitMode { COVER, CONTAIN }
 
+/**
+ * Tek bir [ThemedButtonView] için kayıtlı özel arka plan yapılandırması.
+ *
+ * @param uri            Görsel veya GIF dosyasının content:// / file:// URI'si. null ise özel arka plan yok.
+ * @param opacity        0f (tamamen saydam) .. 1f (tam opak)
+ * @param fitMode        COVER: butonu tamamen kapla ve gerekirse kırp. CONTAIN: sığdır, taşırma.
+ * @param offsetXPercent Görselin yatay konum kaydırması, -1f..1f (CONTAIN modunda anlamlı)
+ * @param offsetYPercent Görselin dikey konum kaydırması, -1f..1f
+ * @param scale          Ek ölçekleme çarpanı, 0.5f..2f arası önerilir
+ */
 data class ButtonBackgroundConfig(
     val uri: String? = null,
     val opacity: Float = 1f,
@@ -39,6 +50,12 @@ data class ButtonBackgroundConfig(
     }
 }
 
+/**
+ * Her biri kendi `buttonKey`'i ile tanımlanan butonların özel arka plan
+ * ayarlarını (GIF/görsel + opaklık + sığdırma + konum/ölçek) kalıcı olarak
+ * saklar. Uygulama her açıldığında ThemedButtonView kendi anahtarıyla
+ * buradan okuyup otomatik uygular.
+ */
 object ButtonBackgroundManager {
 
     private const val PREFS_NAME = "button_background_prefs"
@@ -85,6 +102,7 @@ object ButtonBackgroundManager {
         listeners[buttonKey]?.remove(listener)
     }
 
+    /** Tüm kayıtlı buton anahtarlarını döner — ayarlar ekranındaki liste için. */
     fun allKeys(): Set<String> {
         requireInit()
         return prefs.all.keys
