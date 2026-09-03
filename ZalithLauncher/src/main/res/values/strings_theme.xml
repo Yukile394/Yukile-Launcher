@@ -5,11 +5,11 @@
     <string name="theme_settings_mode_main">Ana Arayüz</string>
     <string name="theme_settings_mode_ingame">Oyun İçi</string>
     <string name="theme_settings_reset">Varsayılana Sıfırla</string>
-    <string name="theme_settings_play_button_bg">OYNA Butonu Arka Planı</string>
+    <string name="theme_settings_play_bg_title">OYNA Butonu Arka Planı</string>
     <string name="theme_settings_pick_image">Görsel / GIF Seç</string>
     <string name="theme_settings_fit_cover">Kapla</string>
     <string name="theme_settings_fit_contain">Sığdır</string>
-    <string name="theme_settings_clear">Kaldır</string>
+    <string name="theme_settings_clear_image">Kaldır</string>
     <string name="theme_settings_opacity">Opaklık</string>
 
     <string name="theme_color_primary">Ana Renk</string>
