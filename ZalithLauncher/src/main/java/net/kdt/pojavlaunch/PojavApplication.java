@@ -21,6 +21,8 @@ import com.movtery.zalithlauncher.context.ContextExecutor;
 import com.movtery.zalithlauncher.context.LocaleHelper;
 import com.movtery.zalithlauncher.feature.log.Logging;
 import com.movtery.zalithlauncher.setting.AllSettings;
+import com.movtery.zalithlauncher.theme.ButtonBackgroundManager;
+import com.movtery.zalithlauncher.theme.ThemeManager;
 import com.movtery.zalithlauncher.ui.activity.ErrorActivity;
 import com.movtery.zalithlauncher.utils.path.PathManager;
 import com.movtery.zalithlauncher.utils.ZHTools;
@@ -74,8 +76,8 @@ public class PojavApplication extends Application {
 			if(Architecture.isx86Device() && Architecture.is32BitsDevice()){
 				String originalJNIDirectory = getApplicationInfo().nativeLibraryDir;
 				getApplicationInfo().nativeLibraryDir = originalJNIDirectory.substring(0,
-												originalJNIDirectory.lastIndexOf("/"))
-												.concat("/x86");
+											originalJNIDirectory.lastIndexOf("/"))
+											.concat("/x86");
 			}
 		} catch (Throwable throwable) {
 			Intent ferrorIntent = new Intent(this, ErrorActivity.class);
@@ -83,6 +85,10 @@ public class PojavApplication extends Application {
 			ferrorIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 			startActivity(ferrorIntent);
 		}
+
+		// 主题系统：颜色 + 按钮自定义背景初始化（进程内仅一次）
+		ThemeManager.INSTANCE.init(this);
+		ButtonBackgroundManager.INSTANCE.init(this);
 
 		//设置主题
 		String launcherTheme = AllSettings.getLauncherTheme().getValue();
