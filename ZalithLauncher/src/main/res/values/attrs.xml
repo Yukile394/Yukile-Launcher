@@ -9,4 +9,11 @@
     <declare-styleable name="AnimTextView">
         <attr name="ripple_for_text" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="ThemedButtonView">
+        <attr name="buttonKey" format="string"/>
+        <attr name="supportsSelectedState" format="boolean"/>
+        <attr name="cornerRadiusDp" format="float"/>
+        <attr name="tintIconWithTextColor" format="boolean"/>
+    </declare-styleable>
 </resources>
