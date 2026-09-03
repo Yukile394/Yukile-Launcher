@@ -18,6 +18,27 @@ import com.movtery.zalithlauncher.theme.ButtonBackgroundManager
 import com.movtery.zalithlauncher.theme.ColorSet
 import com.movtery.zalithlauncher.theme.ThemeManager
 
+/**
+ * Uygulama genelinde kullanılacak standart buton kabı.
+ *
+ * - Tema renklerini (arka plan / kenarlık / metin / seçili durum) [ThemeManager]'dan
+ *   otomatik okur ve canlı olarak günceller.
+ * - `buttonKey` verilirse [ButtonBackgroundManager]'da kayıtlı özel GIF/görsel
+ *   arka planı otomatik yükler; opaklık, kaplama modu (COVER/CONTAIN), konum
+ *   ve ölçek ayarlarına uyar.
+ * - İçerik (ikon, metin) normal şekilde XML'de çocuk view olarak tanımlanır;
+ *   bu sınıf sadece arka planı ve dış görünümü yönetir, içeriğe dokunmaz.
+ *
+ * XML kullanımı:
+ *   <com.movtery.zalithlauncher.ui.view.ThemedButtonView
+ *       android:layout_width="wrap_content"
+ *       android:layout_height="56dp"
+ *       app:buttonKey="home_play_button"
+ *       app:cornerRadiusDp="16"
+ *       app:supportsSelectedState="true">
+ *       <TextView .../>
+ *   </com.movtery.zalithlauncher.ui.view.ThemedButtonView>
+ */
 class ThemedButtonView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -46,6 +67,7 @@ class ThemedButtonView @JvmOverloads constructor(
             cornerRadiusDp = getFloat(R.styleable.ThemedButtonView_cornerRadiusDp, 12f)
         }
 
+        // Arka plan görseli her zaman en altta, içerik view'ları XML sırasına göre üstünde durur.
         addView(backgroundImageView, 0)
         this.background = colorOverlay
 
@@ -80,6 +102,7 @@ class ThemedButtonView @JvmOverloads constructor(
         backgroundListener?.let { buttonKey?.let { key -> ButtonBackgroundManager.removeListener(key, it) } }
     }
 
+    /** Bu butonu programatik olarak "seçili sekme" durumuna al/çıkar. */
     fun setButtonSelected(selected: Boolean) {
         isSelected2 = selected
         applyThemeColors(ThemeManager.current)
@@ -90,6 +113,9 @@ class ThemedButtonView @JvmOverloads constructor(
             isSelected2 && supportsSelectedState -> set.selectedColor
             else -> set.buttonColor
         }
+        // Kenarlık: StateListAnimator yerine basit elevation + tint tercih edildi,
+        // ince bir kenarlık ImageView'in üstüne çizilmek isteniyorsa
+        // GradientDrawable + setStroke burada eklenebilir (ekran bazlı redesign adımında).
     }
 
     private fun applyBackgroundConfig(config: ButtonBackgroundConfig) {
