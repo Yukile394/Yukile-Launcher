@@ -4,6 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
+/**
+ * Kullanıcının seçtiği tüm arayüz renklerini kalıcı olarak saklar ve
+ * uygulama genelinde tek referans noktası olarak sunar.
+ *
+ * Ana arayüz renkleri ve oyun-içi buton renkleri AYRI iki [ColorSet]
+ * olarak tutulur — biri değişince diğeri etkilenmez (istenen davranış).
+ *
+ * Kullanım:
+ *   ThemeManager.init(context)               // Application.onCreate() içinde bir kez
+ *   ThemeManager.current.accentPrimary        // okuma
+ *   ThemeManager.update { it.copy(accentPrimary = newColor) }   // yazma + kalıcı kayıt
+ *   ThemeManager.addListener { colorSet -> ... }                // canlı UI güncellemesi
+ */
 object ThemeManager {
 
     private const val PREFS_NAME = "theme_prefs"
@@ -13,9 +26,11 @@ object ThemeManager {
 
     private lateinit var prefs: SharedPreferences
 
+    /** Ana arayüz için o an aktif renk seti. */
     var current: ColorSet = ColorSet.defaultMain()
         private set
 
+    /** Oyun-içi HUD/buton renkleri için o an aktif renk seti (ana temadan bağımsız). */
     var currentInGame: ColorSet = ColorSet.defaultInGame()
         private set
 
@@ -36,6 +51,8 @@ object ThemeManager {
     private fun requireInit() {
         check(initialized) { "ThemeManager.init(context) çağrılmadan kullanılamaz." }
     }
+
+    // --- Ana arayüz teması ---
 
     fun update(mutator: (ColorSet) -> ColorSet) {
         requireInit()
@@ -59,6 +76,8 @@ object ThemeManager {
         listeners.forEach { it(current) }
     }
 
+    // --- Oyun-içi tema ---
+
     fun updateInGame(mutator: (ColorSet) -> ColorSet) {
         requireInit()
         currentInGame = mutator(currentInGame)
@@ -80,6 +99,8 @@ object ThemeManager {
         saveColorSet(KEY_PREFIX_INGAME, currentInGame)
         inGameListeners.forEach { it(currentInGame) }
     }
+
+    // --- Kalıcılık ---
 
     private fun loadColorSet(prefix: String, fallback: ColorSet): ColorSet {
         if (!prefs.contains(prefix + "primary")) return fallback
@@ -111,6 +132,11 @@ object ThemeManager {
     }
 }
 
+/**
+ * İstenen 9 özelleştirilebilir renk kanalını tutan değişmez veri sınıfı.
+ * "Ana renk / ikincil renk / buton rengi / buton yazı rengi / kenarlık rengi /
+ *  arka plan rengi / vurgu rengi / hover-dokunma rengi / seçili buton rengi"
+ */
 data class ColorSet(
     val primary: Int,
     val secondary: Int,
@@ -135,6 +161,7 @@ data class ColorSet(
             selectedColor = 0xFF5B8DEF.toInt(),
         )
 
+        /** Oyun-içi butonlar için varsayılan: yarı saydam, HUD üstünde okunaklı. */
         fun defaultInGame() = ColorSet(
             primary = 0x66000000,
             secondary = 0x66000000,
