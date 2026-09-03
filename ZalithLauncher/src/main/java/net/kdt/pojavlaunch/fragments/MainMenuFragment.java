@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.movtery.anim.AnimPlayer;
 import com.movtery.anim.animations.Animations;
 import com.movtery.zalithlauncher.InfoCenter;
@@ -24,6 +27,9 @@ import com.movtery.zalithlauncher.feature.version.utils.VersionIconUtils;
 import com.movtery.zalithlauncher.feature.version.VersionInfo;
 import com.movtery.zalithlauncher.feature.version.VersionsManager;
 import com.movtery.zalithlauncher.task.TaskExecutors;
+import com.movtery.zalithlauncher.theme.BackgroundFitMode;
+import com.movtery.zalithlauncher.theme.ButtonBackgroundConfig;
+import com.movtery.zalithlauncher.theme.ButtonBackgroundManager;
 import com.movtery.zalithlauncher.ui.fragment.AboutFragment;
 import com.movtery.zalithlauncher.ui.fragment.ControlButtonFragment;
 import com.movtery.zalithlauncher.ui.fragment.FilesFragment;
@@ -44,6 +50,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MainMenuFragment extends FragmentWithAnim {
     public static final String TAG = "MainMenuFragment";
+    /** OYNA butonuna kullanıcının atadığı özel GIF/foto arka planını arayan anahtar. */
+    private static final String PLAY_BUTTON_KEY = "play_button";
+
     private FragmentLauncherBinding binding;
     private AccountViewWrapper accountViewWrapper;
 
@@ -100,7 +109,35 @@ public class MainMenuFragment extends FragmentWithAnim {
         binding.versionName.setSelected(true);
         binding.versionInfo.setSelected(true);
 
+        applyPlayButtonBackground();
+
         refreshCurrentVersion();
+    }
+
+    /**
+     * ThemeSettingsFragment üzerinden kaydedilmiş olabilecek OYNA butonu
+     * GIF/foto arka planını yükler. Kayıtlı ayar yoksa katman gizli kalır
+     * ve buton düz vurgu rengiyle görünür.
+     */
+    private void applyPlayButtonBackground() {
+        ButtonBackgroundConfig config = ButtonBackgroundManager.INSTANCE.get(PLAY_BUTTON_KEY);
+        ImageView bgView = binding.playButtonBackgroundImage;
+        if (config.getUri() == null) {
+            bgView.setVisibility(View.GONE);
+            bgView.setImageDrawable(null);
+            return;
+        }
+        bgView.setScaleType(config.getFitMode() == BackgroundFitMode.COVER
+                ? ImageView.ScaleType.CENTER_CROP
+                : ImageView.ScaleType.FIT_CENTER);
+        bgView.setAlpha(Math.max(0f, Math.min(1f, config.getOpacity())));
+        bgView.setScaleX(config.getScale());
+        bgView.setScaleY(config.getScale());
+        bgView.setVisibility(View.VISIBLE);
+        Glide.with(this)
+                .load(config.getUri())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(bgView);
     }
 
     private void refreshCurrentVersion() {
