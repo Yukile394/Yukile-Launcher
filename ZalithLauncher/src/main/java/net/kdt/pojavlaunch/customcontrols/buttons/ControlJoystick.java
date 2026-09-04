@@ -11,10 +11,7 @@ import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTI
 import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_WEST;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -86,21 +83,14 @@ public class ControlJoystick extends JoystickView implements ControlInterface {
     }
 
     /**
-     * Purely visual upgrade: gives the joystick a modern glossy knob and a soft
-     * accent glow around its base. Does not affect touch/movement behavior,
-     * the user's configured colors (still applied afterwards via setBackground()),
-     * or the underlying JoystickView input handling.
+     * Purely visual upgrade: gives the joystick a modern accent-colored knob with
+     * a defined rim, and a soft glow behind its base. Only uses APIs the joystick
+     * library and Android's View class actually expose (setButtonColor / setBorderWidth
+     * are already used elsewhere in this file). Does not touch touch/movement behavior,
+     * and the user's configured colors still apply afterwards via setBackground().
      */
     private void applyModernVisuals(ControlLayout layout) {
-        Drawable knobSource = ContextCompat.getDrawable(layout.getContext(), R.drawable.joystick_button_modern);
-        if (knobSource != null) {
-            int knobSize = (int) Tools.dpToPx(96);
-            Bitmap knobBitmap = Bitmap.createBitmap(knobSize, knobSize, Bitmap.Config.ARGB_8888);
-            Canvas knobCanvas = new Canvas(knobBitmap);
-            knobSource.setBounds(0, 0, knobSize, knobSize);
-            knobSource.draw(knobCanvas);
-            setButtonDrawable(new BitmapDrawable(layout.getContext().getResources(), knobBitmap));
-        }
+        setButtonColor(Color.parseColor("#5B8DEF"));
         View view = getControlView();
         view.setBackground(ContextCompat.getDrawable(layout.getContext(), R.drawable.joystick_base_modern));
     }
