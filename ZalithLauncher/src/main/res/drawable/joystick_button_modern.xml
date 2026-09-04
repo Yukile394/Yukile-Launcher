@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- Glossy gradient knob: bright highlight top-left, deep accent edge -->
+    <gradient
+        android:type="radial"
+        android:gradientRadius="60dp"
+        android:centerX="0.35"
+        android:centerY="0.3"
+        android:startColor="#FFFFFFFF"
+        android:centerColor="#FF6E8DF0"
+        android:endColor="#FF2F4D9C"
+        android:useLevel="false" />
+    <stroke
+        android:width="1.5dp"
+        android:color="#40FFFFFF" />
+</shape>
