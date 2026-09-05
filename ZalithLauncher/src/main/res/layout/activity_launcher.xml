@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
-            android:textColor="@color/text_primary"
+            android:textColor="#2A2A32"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2dp"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="#3D3D46"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/_13sdp" />
 
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:gravity="end"
-                    android:textColor="@color/text_tertiary"
+                    android:textColor="#6B6B75"
                     android:textSize="@dimen/_11sdp" />
 
             </LinearLayout>
@@ -162,9 +162,11 @@
             android:id="@+id/notice_got_button"
             android:layout_width="0dp"
             android:layout_height="@dimen/_36sdp"
-            android:background="@drawable/background_button_primary"
+            android:background="@drawable/background_button_notice"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/generic_ok"
-            android:textColor="@color/text_on_accent"
+            android:textColor="#2A2A32"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
