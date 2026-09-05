@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_menu_main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/launcher_menu"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/surface_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/play_layout"
+        app:layout_constraintHorizontal_weight="6.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_14sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_16sdp">
+
+                <!-- Welcome banner -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_86sdp"
+                    android:background="@drawable/bg_home_banner_shape"
+                    android:clipToOutline="true">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginEnd="-40dp"
+                        android:layout_marginBottom="-40dp"
+                        android:background="@drawable/shape_circle_sun"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_home_banner_scrim"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/home_welcome_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/home_welcome_title"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="@dimen/_18ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:text="@string/home_welcome_subtitle"
+                        android:textColor="#D9FFFFFF"
+                        android:textSize="@dimen/_11sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/home_welcome_title" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_menu_settings"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:drawableTint="@color/accent_primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/home_quick_actions"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold" />
+
+                <!-- Quick Actions grid: row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                        android:id="@+id/about_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_item"
+                        android:padding="@dimen/_10sdp"
+                        app:ripple_for_relative="true">
+
+                        <ImageView
+                            android:id="@+id/about_icon"
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/badge_red"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_about"
+                            app:tint="#FFFFFFFF"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_spinner_arrow_right"
+                            app:tint="@color/text_tertiary"/>
+
+                        <TextView
+                            android:id="@+id/about_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/about_icon"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"/>
+
+                    </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                    <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                        android:id="@+id/custom_control_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_item"
+                        android:padding="@dimen/_10sdp"
+                        app:ripple_for_relative="true">
+
+                        <ImageView
+                            android:id="@+id/custom_control_icon"
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/badge_purple"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_menu_custom_controls"
+                            app:tint="#FFFFFFFF"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_spinner_arrow_right"
+                            app:tint="@color/text_tertiary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/custom_control_icon"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="@string/custom_control_title"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"/>
+
+                    </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Quick Actions grid: row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="horizontal">
+
+                    <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                        android:id="@+id/open_main_dir_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_item"
+                        android:padding="@dimen/_10sdp"
+                        app:ripple_for_relative="true">
+
+                        <ImageView
+                            android:id="@+id/open_main_dir_icon"
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/badge_blue"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_folder"
+                            app:tint="#FFFFFFFF"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_spinner_arrow_right"
+                            app:tint="@color/text_tertiary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/open_main_dir_icon"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="@string/main_open_main_dir"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"/>
+
+                    </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                    <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                        android:id="@+id/install_jar_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_item"
+                        android:padding="@dimen/_10sdp"
+                        app:ripple_for_relative="true">
+
+                        <ImageView
+                            android:id="@+id/install_jar_icon"
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/badge_orange"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_java"
+                            app:tint="#FFFFFFFF"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_spinner_arrow_right"
+                            app:tint="@color/text_tertiary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/install_jar_icon"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="@string/main_install_jar_file"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold"/>
+
+                    </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Quick Actions grid: row 3 -->
+                <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                    android:id="@+id/share_logs_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/background_item"
+                    android:padding="@dimen/_10sdp"
+                    app:ripple_for_relative="true">
+
+                    <ImageView
+                        android:id="@+id/share_logs_icon"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/badge_teal"
+                        android:padding="@dimen/_6sdp"
+                        android:src="@drawable/ic_share"
+                        app:tint="#FFFFFFFF"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_spinner_arrow_right"
+                        app:tint="@color/text_tertiary"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_toEndOf="@id/share_logs_icon"
+                        android:text="@string/main_share_logs"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold"/>
+
+                </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/play_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@+id/launcher_menu"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/shadowView"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/surface_border_subtle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/play_layout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/play_main_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/surface_elevated_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/shadowView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/play_buttons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_14sdp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/account_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_14sdp"
+                    android:background="@drawable/background_item"
+                    android:padding="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/account_card_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_help"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:drawableTint="@color/accent_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/home_your_account"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <include
+                        android:id="@+id/view_account"
+                        layout="@layout/view_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/account_card_label" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/version_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/home_game_version"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/version"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                    android:id="@+id/version"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/background_item_unselected"
+                    android:paddingHorizontal="@dimen/_4sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/play_button"
+                    app:layout_constraintEnd_toStartOf="@+id/manager_profile_button"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:id="@+id/version_icon"
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_minecraft"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/version_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/version_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="start"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="@string/version_no_versions"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/version_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="start"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/manager_profile_button"
+                    android:layout_width="@dimen/_44sdp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/background_item_unselected"
+                    android:padding="@dimen/_10sdp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_setting"
+                    app:layout_constraintBottom_toTopOf="@+id/play_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/version"
+                    app:tint="@color/text_secondary" />
+
+                <ImageView
+                    android:id="@+id/play_button_background_image"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_56sdp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/play_button"
+                    app:layout_constraintEnd_toEndOf="@id/play_button"
+                    app:layout_constraintStart_toStartOf="@id/play_button"
+                    app:layout_constraintTop_toTopOf="@id/play_button" />
+
+                <com.movtery.zalithlauncher.ui.view.AnimButton
+                    android:id="@+id/play_button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_56sdp"
+                    android:background="@drawable/background_button_primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.03"
+                    android:text="@string/main_launch"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_on_accent"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toTopOf="@+id/play_ready_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/play_ready_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/home_ready_to_play"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
