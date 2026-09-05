@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <!-- Soft outer glow, fading to transparent towards the edge of the view -->
     <gradient
         android:type="radial"
         android:gradientRadius="180dp"
