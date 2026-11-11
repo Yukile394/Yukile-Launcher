@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Zalith Launcher -->
     <string name="generic_open">Open</string>
     <string name="generic_close">Close</string>
@@ -568,8 +568,8 @@
     <string name="setting_reboot_tip">This setting has been changed, but requires the app to be restarted to take effect!</string>
     <string name="setting_zink_driver_adreno">The launcher detected that your device has an Adreno GPU. Enabling this option may cause the Zink renderer to malfunction. Are you sure you want to enable this option?</string>
     <!-- Game -->
-    <string name="mod_check_compat_scan">Compatibility scan found parts of your mods that cannot run (or may crash) on this device:\n%s\n\nWrong-architecture or Windows/macOS native files cannot be loaded on Android. Remove or replace those mods if the game crashes.</string>
-    <string name="game_crash_cause">Likely cause: %s</string>
+    <string name="mod_check_compat_scan" tools:ignore="MissingTranslation">Compatibility scan found parts of your mods that cannot run (or may crash) on this device:\n%s\n\nWrong-architecture or Windows/macOS native files cannot be loaded on Android. Remove or replace those mods if the game crashes.</string>
+    <string name="game_crash_cause" tools:ignore="MissingTranslation">Likely cause: %s</string>
     <string name="game_exit_message">The application/game exited with code %d.</string>
     <string name="game_singnal_message">The application/game aborted due to fatal signal %d.</string>
     <string name="game_exit_note">For details on the error, please check the log file or crash report. If you can\'t solve the issue on your own, please send the log file or crash report to someone who can help you resolve it!</string>
