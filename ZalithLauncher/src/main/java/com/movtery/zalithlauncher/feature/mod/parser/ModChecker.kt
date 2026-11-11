@@ -185,6 +185,22 @@ class ModChecker {
                 }
             }
 
+            // Generic jar scan (any mod, not only known ids): wrong-arch/desktop natives, desktop-only APIs
+            val reports = modInfoList.mapNotNull { it.file }.distinct().map { ModNativeCompatScanner.scan(it) }
+            ModCompatReport.reports = reports
+            val sb = StringBuilder()
+            reports.forEach { r ->
+                r.fatal.forEach { sb.append("• ${r.file.name} → $it\r\n"); Logger.appendToLog("Compat Scan: FATAL ${r.file.name}: $it") }
+                r.risky.forEach { sb.append("• ${r.file.name} → $it\r\n"); Logger.appendToLog("Compat Scan: RISK ${r.file.name}: $it") }
+            }
+            if (sb.isNotEmpty()) {
+                // value = hash of findings: re-shown whenever the jar set/findings change
+                modCheckSettings[AllModCheckSettings.COMPAT_SCAN] = Pair(
+                    sb.toString().hashCode().toString(),
+                    context.getString(R.string.mod_check_compat_scan, sb.toString().trimEnd())
+                )
+            }
+
             showResultDialog(context, modCheckSettings) {
                 executeTask(modResult)
             }

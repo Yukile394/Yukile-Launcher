@@ -60,6 +60,7 @@ class LaunchArgs(
         }
 
         argsList.addAll(getCacioJavaArgs(runtime.javaVersion == 8))
+        if (runtime.javaVersion > 8) argsList.addAll(getCompatOpenArgs())
 
         val is7 = VersionNumber.compare(VersionNumber.asVersion(versionInfo.id ?: "0.0").canonical, "1.12") < 0
         val configFilePath = if (is7) LibPath.LOG4J_XML_1_7 else LibPath.LOG4J_XML_1_12
@@ -153,6 +154,16 @@ class LaunchArgs(
 
     companion object {
         @JvmStatic
+        /**
+         * Desktop mods/clients reflect into JDK internals (setAccessible, Unsafe, nio buffers). Java 17+ denies that
+         * with InaccessibleObjectException unless the package is opened. Same idea FCL ships. Harmless if unused.
+         */
+        fun getCompatOpenArgs(): List<String> = listOf(
+            "java.base/java.lang", "java.base/java.lang.reflect", "java.base/java.io", "java.base/java.net",
+            "java.base/java.nio", "java.base/java.util", "java.base/java.util.concurrent", "java.base/java.text",
+            "java.base/sun.nio.ch", "java.base/jdk.internal.misc", "java.desktop/java.awt", "java.desktop/sun.font"
+        ).map { "--add-opens=$it=ALL-UNNAMED" }
+
         fun getCacioJavaArgs(isJava8: Boolean): List<String> {
             val argsList: MutableList<String> = ArrayList()
 

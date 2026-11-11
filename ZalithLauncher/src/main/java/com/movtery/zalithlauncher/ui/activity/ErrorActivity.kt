@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.movtery.zalithlauncher.InfoCenter
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.databinding.ActivityErrorBinding
+import com.movtery.zalithlauncher.feature.log.CrashDiagnoser
 import com.movtery.zalithlauncher.utils.ZHTools
 import net.kdt.pojavlaunch.Tools
 
@@ -80,7 +81,9 @@ class ErrorActivity : BaseActivity() {
         binding.apply {
             this.errorTitle.setText(R.string.generic_wrong_tip)
             this.errorText.apply {
-                text = getString(errorText, code)
+                val cause = extras.getString(BUNDLE_CAUSE)
+                text = getString(errorText, code) +
+                    (if (cause.isNullOrBlank()) "" else "\n\n" + getString(R.string.game_crash_cause, cause))
                 textSize = 14f
             }
             this.errorTip.visibility = View.VISIBLE
@@ -115,6 +118,7 @@ class ErrorActivity : BaseActivity() {
         private const val BUNDLE_THROWABLE = "throwable"
         private const val BUNDLE_SAVE_PATH = "save_path"
         private const val BUNDLE_EASTER_EGG = "easter_egg"
+        private const val BUNDLE_CAUSE = "cause"
 
         @JvmStatic
         fun showLauncherCrash(ctx: Context, savePath: String?, th: Throwable?) {
@@ -134,6 +138,7 @@ class ErrorActivity : BaseActivity() {
             isSignal: Boolean
         ) {
             val intent = Intent(ctx, ErrorActivity::class.java)
+            intent.putExtra(BUNDLE_CAUSE, runCatching { CrashDiagnoser.diagnose() }.getOrNull())
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra(BUNDLE_CODE, code)

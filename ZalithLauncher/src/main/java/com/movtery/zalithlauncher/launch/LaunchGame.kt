@@ -12,6 +12,8 @@ import com.movtery.zalithlauncher.feature.accounts.AccountType
 import com.movtery.zalithlauncher.feature.accounts.AccountUtils
 import com.movtery.zalithlauncher.feature.accounts.AccountsManager
 import com.movtery.zalithlauncher.feature.log.Logging
+import com.movtery.zalithlauncher.feature.mod.parser.ModCompatReport
+import com.movtery.zalithlauncher.feature.mod.parser.ModNativeCompatScanner
 import com.movtery.zalithlauncher.feature.version.Version
 import com.movtery.zalithlauncher.renderer.Renderers
 import com.movtery.zalithlauncher.setting.AllSettings
@@ -124,6 +126,13 @@ class LaunchGame {
                 Renderers.setCurrentRenderer(activity, AllSettings.renderer.getValue())
             }
 
+            LaunchGuard.blockingProblem(minecraftVersion)?.let { reason ->
+                Logger.appendToLog("Launch Guard: $reason")
+                activity.runOnUiThread { Toast.makeText(activity, reason, Toast.LENGTH_LONG).show() }
+                GameService.setActive(false)
+                return
+            }
+
             var account = AccountsManager.currentAccount!!
             if (minecraftVersion.offlineAccountLogin) {
                 account = MinecraftAccount().apply {
@@ -134,7 +143,9 @@ class LaunchGame {
 
             val customArgs = minecraftVersion.getJavaArgs().takeIf { it.isNotBlank() } ?: ""
 
-            val javaRuntime = getRuntime(activity, minecraftVersion, version.javaVersion?.majorVersion ?: 8)
+            // auto-pick must also satisfy mod bytecode (e.g. a Java 21 mod on an MC version that asks for 8)
+            val needJava = maxOf(version.javaVersion?.majorVersion ?: 8, LaunchGuard.javaNeededByMods())
+            val javaRuntime = getRuntime(activity, minecraftVersion, needJava)
 
             printLauncherInfo(
                 minecraftVersion,
@@ -152,6 +163,15 @@ class LaunchGame {
 
                 if (modCheckResult.hasSodiumOrEmbeddium) {
                     Logger.appendToLog("Mod Perception: Sodium or Embeddium Mod found, attempting to load the disable warning tool later!")
+                }
+            }
+
+            runCatching {
+                val rtJava = MultiRTUtils.read(javaRuntime).javaVersion
+                ModCompatReport.reports.forEach { r ->
+                    val need = ModNativeCompatScanner.javaForMajor(r.maxClassMajor)
+                    if (rtJava in 1 until need)
+                        Logger.appendToLog("Compat Scan: ${r.file.name} needs Java $need, runtime is Java $rtJava -> UnsupportedClassVersionError expected")
                 }
             }
 

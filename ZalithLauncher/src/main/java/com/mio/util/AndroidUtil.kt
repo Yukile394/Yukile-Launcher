@@ -47,6 +47,27 @@ class AndroidUtil {
             }
         }
 
+        /** Reads ELF e_machine from any stream (first 20 bytes). Returns "" if not ELF. */
+        fun getElfArchFromStream(stream: java.io.InputStream): String {
+            val h = ByteArray(20)
+            var n = 0
+            while (n < h.size) {
+                val r = stream.read(h, n, h.size - n)
+                if (r < 0) return ""
+                n += r
+            }
+            if (h[0] != 0x7F.toByte() || h[1] != 'E'.code.toByte() ||
+                h[2] != 'L'.code.toByte() || h[3] != 'F'.code.toByte()) return ""
+            val order = if (h[5].toInt() == 2) ByteOrder.BIG_ENDIAN else ByteOrder.LITTLE_ENDIAN
+            return when (ByteBuffer.wrap(h, 18, 2).order(order).short.toInt() and 0xFFFF) {
+                0x03 -> "x86"
+                0x3E -> "x86_64"
+                0x28 -> "ARM"
+                0xB7 -> "AArch64"
+                else -> "other"
+            }
+        }
+
         fun getElfArchFromZip(zipFile: File, elfEntryPath: String): String {
             var arch = ""
             try {
