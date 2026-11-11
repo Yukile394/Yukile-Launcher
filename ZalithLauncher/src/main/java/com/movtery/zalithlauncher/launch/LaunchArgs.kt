@@ -153,17 +153,18 @@ class LaunchArgs(
     }
 
     companion object {
-        @JvmStatic
         /**
          * Desktop mods/clients reflect into JDK internals (setAccessible, Unsafe, nio buffers). Java 17+ denies that
          * with InaccessibleObjectException unless the package is opened. Same idea FCL ships. Harmless if unused.
          */
+        @JvmStatic
         fun getCompatOpenArgs(): List<String> = listOf(
             "java.base/java.lang", "java.base/java.lang.reflect", "java.base/java.io", "java.base/java.net",
             "java.base/java.nio", "java.base/java.util", "java.base/java.util.concurrent", "java.base/java.text",
             "java.base/sun.nio.ch", "java.base/jdk.internal.misc", "java.desktop/java.awt", "java.desktop/sun.font"
         ).map { "--add-opens=$it=ALL-UNNAMED" }
 
+        @JvmStatic
         fun getCacioJavaArgs(isJava8: Boolean): List<String> {
             val argsList: MutableList<String> = ArrayList()
 
