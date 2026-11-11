@@ -28,6 +28,21 @@ val getBuildType = {
 }
 
 val nameId = "com.movtery.zalithlauncher"
+
+// Release imzası: MOVTERY_KEYSTORE_PASSWORD ile movtery-key.jks gerçekten açılabiliyor mu?
+// Açılamıyorsa (fork'ta secret yok/yanlış) imzasız APK yerine debug anahtarıyla imzalanır,
+// böylece APK Android tarafından kurulabilir kalır.
+val releaseKeystorePwd: String? = System.getenv("MOVTERY_KEYSTORE_PASSWORD")
+val releaseKeystoreUsable: Boolean = !releaseKeystorePwd.isNullOrEmpty() && runCatching {
+    file("movtery-key.jks").inputStream().use {
+        java.security.KeyStore.getInstance("JKS").load(it, releaseKeystorePwd!!.toCharArray())
+    }
+    true
+}.getOrDefault(false)
+if (!releaseKeystoreUsable) {
+    logger.warn("BUILD: movtery-key.jks cannot be opened with MOVTERY_KEYSTORE_PASSWORD, release will be signed with the debug keystore")
+}
+
 val generatedZalithDir = file("$buildDir/generated/source/zalith/java")
 val launcherAPPName = project.findProperty("launcher_app_name") as? String ?: error("The \"launcher_app_name\" property is not set in gradle.properties.")
 val launcherName = project.findProperty("launcher_name") as? String ?: error("The \"launcher_name\" property is not set in gradle.properties.")
@@ -103,7 +118,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             resValue("string", "storageProviderAuthorities", storageProviderId)
-            signingConfig = signingConfigs.getByName("releaseBuild")
+            signingConfig = signingConfigs.getByName(if (releaseKeystoreUsable) "releaseBuild" else "customDebug")
         }
     }
 
