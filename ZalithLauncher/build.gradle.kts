@@ -1,6 +1,7 @@
 import com.android.build.api.variant.FilterConfiguration.FilterType.ABI
 import com.android.build.gradle.tasks.MergeSourceSetFolders
 import com.github.megatronking.stringfog.plugin.StringFogExtension
+import java.security.KeyStore
 
 plugins {
     id("com.android.application")
@@ -35,7 +36,7 @@ val nameId = "com.movtery.zalithlauncher"
 val releaseKeystorePwd: String? = System.getenv("MOVTERY_KEYSTORE_PASSWORD")
 val releaseKeystoreUsable: Boolean = !releaseKeystorePwd.isNullOrEmpty() && runCatching {
     file("movtery-key.jks").inputStream().use {
-        java.security.KeyStore.getInstance("JKS").load(it, releaseKeystorePwd!!.toCharArray())
+        KeyStore.getInstance("JKS").load(it, releaseKeystorePwd!!.toCharArray())
     }
     true
 }.getOrDefault(false)
